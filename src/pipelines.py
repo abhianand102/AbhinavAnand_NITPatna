@@ -59,6 +59,46 @@ def extract_bill_info_from_url(url: str) -> dict:
 
     img = Image.open(BytesIO(resp.content)).convert("RGB")
     return img
+def extract_bill_info_from_bytes(image_bytes: bytes) -> dict:
+    """
+    Same as extract_bill_info_from_url, but takes raw image bytes.
+    Use this for file uploads (local screenshots).
+    """
+    img = Image.open(BytesIO(image_bytes)).convert("RGB")
+    text = run_ocr(img)
+
+    print("===== OCR OUTPUT (UPLOAD) START =====")
+    print(text)
+    print("===== OCR OUTPUT (UPLOAD) END =======")
+
+    # TODO: later parse `text` into actual items
+    bill_items = [
+        {
+            "item_name": "Dummy from OCR (upload)",
+            "item_amount": 100.00,
+            "item_rate": 100.00,
+            "item_quantity": 1.00
+        }
+    ]
+
+    total_item_count = len(bill_items)
+    reconciled_amount = sum(item["item_amount"] for item in bill_items)
+
+    result = {
+        "is_success": True,
+        "data": {
+            "pagewise_line_items": [
+                {
+                    "page_no": "1",
+                    "bill_items": bill_items
+                }
+            ],
+            "total_item_count": total_item_count,
+            "reconciled_amount": reconciled_amount
+        }
+    }
+    return result
+
 
 
     total_item_count = len(bill_items)
