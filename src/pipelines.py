@@ -3,22 +3,15 @@ from io import BytesIO
 from PIL import Image
 import pytesseract
 
-# IMPORTANT: point to the executable, not the folder
-pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
-# If this is wrong on your system, adjust the path.
+# If you're on Windows, set the path to tesseract.exe like this:
+# pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
 def download_image(url: str) -> Image.Image:
-    headers = {
-        # Pretend to be a normal browser
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
-    }
-
-    resp = requests.get(url, headers=headers, timeout=15)
-    print("Status:", resp.status_code)
-    print("Content-Type:", resp.headers.get("Content-Type"))
-
+    """
+    Download image from a URL and return as PIL Image.
+    """
+    resp = requests.get(url, timeout=15)
     resp.raise_for_status()
-
     img = Image.open(BytesIO(resp.content)).convert("RGB")
     return img
 
@@ -44,6 +37,8 @@ def extract_bill_info_from_url(url: str) -> dict:
     print("===== OCR OUTPUT START =====")
     print(text)
     print("===== OCR OUTPUT END =======")
+
+    # TODO: later parse `text` into items
 
     # Dummy data kept for now so API always returns valid response
     bill_items = [
