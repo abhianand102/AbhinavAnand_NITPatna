@@ -120,7 +120,7 @@ def find_header_and_columns(rows):
 
     for x, text in header_row:
         t = text.lower()
-        if "desc" in t:
+        if "desc" in  t:
             desc_x = x
         elif "qty" in t:
             qty_x = x
