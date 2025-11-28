@@ -3,10 +3,20 @@ import requests
 from io import BytesIO
 from PIL import Image
 import pytesseract
+import shutil
+import sys
 
 # IMPORTANT: point to the executable, not just the folder.
 # Make sure this path matches your actual installation.
-pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+# pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+
+
+
+# On Windows use installed path; on Render/Linux auto-detect
+if sys.platform.startswith("win"):
+    pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+else:
+    pytesseract.pytesseract.tesseract_cmd = shutil.which("tesseract")
 
 
 # ------------------------
