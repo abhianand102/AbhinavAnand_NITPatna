@@ -49,6 +49,17 @@ def extract_bill_info_from_url(url: str) -> dict:
             "item_quantity": 1.00
         }
     ]
+    def download_image(url: str) -> Image.Image:
+    resp = requests.get(url, timeout=15)
+    resp.raise_for_status()
+
+    # Debug: print content-type and length
+    print("Content-Type:", resp.headers.get("Content-Type"))
+    print("Response size:", len(resp.content))
+
+    img = Image.open(BytesIO(resp.content)).convert("RGB")
+    return img
+
 
     total_item_count = len(bill_items)
     reconciled_amount = sum(item["item_amount"] for item in bill_items)
