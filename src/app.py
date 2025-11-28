@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from pipelines import extract_bill_info_from_url
+# from pipelines import extract_bill_info_from_url
+from .pipelines import extract_bill_info_from_url
+
 
 app = FastAPI()
 
