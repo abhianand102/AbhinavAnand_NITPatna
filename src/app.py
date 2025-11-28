@@ -13,7 +13,7 @@ def predict(body: RequestBody):
         result = extract_bill_info_from_url(body.document)
         return result
     except Exception as e:
-        # If anything goes wrong, return a structured error
+        # If anything goes wrong, return a structured  error
         return {
             "is_success": False,
             "data": None,
