@@ -18,4 +18,4 @@ def predict(body: RequestBody):
             "is_success": False,
             "data": None,
             "error": str(e)
-        }
+         }
